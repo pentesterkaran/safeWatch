@@ -17,7 +17,7 @@ def vt_report(api,ip):
     if not os.path.exists('output/'+today):
             os.makedirs('output/'+today)
     f= open('output/'+today+'/'+str(ip) + ".txt","a+")
-    f.truncate(0)
+    # f.truncate(0)
     print("\n --------------------------------- ")
     print("\n VirusTotal Report:")
     print("\n --------------------------------- \n")

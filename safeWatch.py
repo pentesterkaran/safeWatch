@@ -12,6 +12,8 @@ from ipwhois import IPWhois
 from Modules import TitleOpen
 from Modules import virusTotal
 from Modules import whoIS
+from Modules import hash
+from Modules import dns
 
 # Opening Config file
 try:
@@ -26,6 +28,10 @@ def switchMenu(choice):
         urlSanitise()
     if choice == '2':
         repChecker()
+    if choice == '3':
+        hashMenu()
+    if choice == '4':
+        dnsMenu()
     if choice == '0':
         sys.exit("Exiting safeWatch... done")
     else:
@@ -36,8 +42,10 @@ def mainMenu():
     print("\n           s  a  f  e  W  a  t  c  h           ")
     print("\n --------------------------------- ")
     print(" What would you like to do? ")
-    print("\n OPTION 1: Sanitise URL For emails ")
+    print("\n OPTION 1: Sanitise URL ")
     print(" OPTION 2: Reputation Checker")
+    print("OPTION 3: Hashing Menu")
+    print("OPTION 4: Dns Tools")
     print(" OPTION 0: Exit Tool")
     switchMenu(input())
 
@@ -121,6 +129,56 @@ def get_domain(url):
     domain = parsed_url.netloc
     return domain
 
+
+def hashSwitch(choice):
+    if choice == 1:
+        hash.hashFile()
+    elif choice == 2:
+        hash.hashText()
+    elif choice == 3:
+        virus_api =  configvars.data['VT_API_KEY']
+        hValue = input("Provide Hash: ")
+        hash.hashRating(hValue,virus_api)
+    elif choice == 4:
+        virus_api =  configvars.data['VT_API_KEY']
+        hash.hashAndFileUpload(virus_api)
+
+
+def hashMenu():
+    print('-------------------------------------------------')
+    print('*****************HASH MENU**********************')
+    print('-------------------------------------------------')
+    print('What Would You Like To Do : ')
+    print('OPTION 1: Hash A File')
+    print('OPTION 2: Input and Hash A Text')
+    print('OPTION 3: Check A Hash For Unknown Malicious Activity')
+    print('OPTION 4: Hash a File and Check For Unknown Malicious Activity')
+    print('Option 0: Exit')
+    hashSwitch(int(input()))
+
+
+def dnsSwitch(choice):
+    if choice == '1':
+        dns.reverseDnsLookup()
+    if choice == '2':
+        dns.dnsLookup()
+    if choice == '3':
+        ip = input("Enter Ip: ")
+        dns.whois(ip)
+
+    else:
+        mainMenu()
+
+def dnsMenu():
+    print("\n --------------------------------- ")
+    print("         D N S    T O O L S        ")
+    print(" --------------------------------- ")
+    print(" What would you like to do? ")
+    print(" OPTION 1: Reverse DNS Lookup")
+    print(" OPTION 2: DNS Lookup")
+    print(" OPTION 3: WHOIS Lookup")
+    print(" OPTION 0: Exit to Main Menu")
+    dnsSwitch(input())
 
 if __name__ == '__main__':
     titleLogo()
